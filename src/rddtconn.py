@@ -6,7 +6,7 @@ class rddtconn():
         self.conf_obj = configparser.ConfigParser()
         self.conf_obj.read(str(Path.home())+r'/.config/pyrip/config.ini')
         self.default_sec = self.conf_obj['DEFAULT']
-
+        self.photodir = self.default_sec['photos_dir']
         self.reddit = praw.Reddit(
             client_id = self.default_sec['client_id'],
             client_secret = self.default_sec['client_secret'],

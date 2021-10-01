@@ -10,13 +10,14 @@ class img_pull():
         self.subreddit_choice=subreddit
         self.reddit=rddtconn().reddit
         self.subreddit=self.reddit.subreddit(self.subreddit_choice)
+        self.photos_dir = rddtconn().photodir
 
-    def mkfold(self,foldname):
-        if os.path.isdir(foldname):
+    def mkfold(self,foldname,base):
+        if os.path.isdir(base+foldname):
             return True
 
         else:
-            os.mkdir(str(foldname))
+            os.makedirs(str(base+foldname))
 
     def pull(self, number):
         for submission in self.subreddit.hot(limit=number):
@@ -25,17 +26,17 @@ class img_pull():
 
             try:
                 type_guess = filetype.guess(reddit_image.content).extension
-                self.mkfold(type_guess)
+                self.mkfold(r'/'+type_guess,self.photos_dir)
 
-                with open(str(type_guess)+'/'+title,'wb') as image:
+                with open(str(self.photos_dir+r'/'+type_guess)+'/'+title,'wb') as image:
                     image.write(reddit_image.content)
 
             except Exception as err:
-                self.mkfold('misc')
+                self.mkfold(r'/misc',self.photos_dir)
                 print(submission.url)
 
                 if('imgur' in submission.url and not('.gif' in submission.url)):
-                    with open('misc'+'/'+title,'wb') as image:
+                    with open(self.photos_dir+r'/misc'+'/'+title,'wb') as image:
                         imgur_weblink=requests.get(submission.url)
                         soup=BeautifulSoup(imgur_weblink.content,'html.parser')
                         for link in (soup.find_all('meta')):
@@ -45,7 +46,7 @@ class img_pull():
                                 image.write(imgur_img.content)
 
                 elif('imgur' in submission.url and '.gif' in submission.url):
-                    with open('misc'+'/'+title,'wb') as image:
+                    with open(self.photos_dir+r'/misc'+'/'+title,'wb') as image:
                         imgur_weblink=requests.get(submission.url)
                         soup=BeautifulSoup(imgur_weblink.content,'html.parser')
                         for link in (soup.find_all('meta')):
