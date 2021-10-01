@@ -11,7 +11,7 @@ from pathlib import Path
 def confchk():
 
     pyrip_conf = str(Path.home())+r'/.config/pyrip/'
-    if not(os.path.exists(pyrip_conf)):
+    if not(os.path.exists(pyrip_conf+'config.ini')):
         config = configparser.ConfigParser()
         default = config['DEFAULT']
         default['username'] = ''
@@ -20,7 +20,7 @@ def confchk():
         default['user_agent']=""
         default['username']=""
         default['password']=""
-        
+        default['photos_dir']=str(Path.home())+r'PyRIP' 
         os.mkdir(pyrip_conf)
         with open(pyrip_conf+'config.ini','w') as configfile:
             config.write(configfile)
