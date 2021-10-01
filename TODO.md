@@ -1,0 +1,5 @@
+- Photo Database, Postgresql, Encryption of database
+- Different Picture folder structure
+- Multithreading
+- Develop the GUI more
+- Implement duplicate image searching
