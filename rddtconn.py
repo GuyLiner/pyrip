@@ -1,9 +1,10 @@
 import praw
 import configparser
+from pathlib import Path
 class rddtconn():
     def __init__(self):
         self.conf_obj = configparser.ConfigParser()
-        self.conf_obj.read(r'config/config.ini')
+        self.conf_obj.read(str(Path.home())+r'.config/pyrip/config.ini')
         self.default_sec = self.conf_obj['DEFAULT']
         self.reddit = praw.Reddit(
             client_id = self.default_sec['client_id'],
