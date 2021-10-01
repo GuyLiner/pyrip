@@ -1,4 +1,4 @@
-== License
+# License
 
 This file is part of PyRIP.
 
