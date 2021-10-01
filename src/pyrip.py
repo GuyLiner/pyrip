@@ -20,8 +20,11 @@ def confchk():
         default['user_agent']=""
         default['username']=""
         default['password']=""
-        default['photos_dir']=str(Path.home())+r'PyRIP' 
-        os.mkdir(pyrip_conf)
+        default['photos_dir']=str(Path.home())+r'/PyRIP' 
+        try:
+            os.mkdir(pyrip_conf)
+        except:
+            print("Folder exists, but config does not. Writing...")
         with open(pyrip_conf+'config.ini','w') as configfile:
             config.write(configfile)
 
