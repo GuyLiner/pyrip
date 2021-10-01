@@ -6,9 +6,12 @@ import json
 import argparse
 import gui
 import img_pull
+from pathlib import Path
 
 def confchk():
-    if not(os.path.exists(r'config/config.ini')):
+
+    pyrip_conf = str(Path.home())+r'/.config/pyrip/'
+    if not(os.path.exists(pyrip_conf)):
         config = configparser.ConfigParser()
         default = config['DEFAULT']
         default['username'] = ''
@@ -17,10 +20,9 @@ def confchk():
         default['user_agent']=""
         default['username']=""
         default['password']=""
-
-        if not(os.path.exists('config')):
-            os.mkdir('config')
-        with open(r'config/config.ini','w') as configfile:
+        
+        os.mkdir(pyrip_conf)
+        with open(pyrip_conf+'config.ini','w') as configfile:
             config.write(configfile)
 
 def main():
